@@ -1,0 +1,4 @@
+awsiotsdk>=1.21.0
+adafruit-circuitpython-dht>=3.7.0
+RPi.GPIO>=0.7.1
+python-dotenv>=1.0.0
