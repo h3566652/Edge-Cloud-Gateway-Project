@@ -254,3 +254,6 @@ aws_credentials.json
 *.log
 *.swp
 .Rhistory
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
