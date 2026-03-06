@@ -253,3 +253,4 @@ aws_credentials.json
 # 라즈베리 파이 임시 파일
 *.log
 *.swp
+.Rhistory
