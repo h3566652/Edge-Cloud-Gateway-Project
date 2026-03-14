@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opcua-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opcua-client
+  template:
+    metadata:
+      labels:
+        app: opcua-client
+    spec:
+      containers:
+      - name: opcua-client
+        image: docker.io/library/iot-gateway:v1
+        command: ["python3", "scripts/opcua_client.py"]
+        securityContext:
+          privileged: true
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        volumeMounts:
+        - name: certs
+          mountPath: /home/kpark30525/iot-project/certs
+          readOnly: true
+      volumes:
+      - name: certs
+        hostPath:
+          path: /home/kpark30525/iot-project/certs
+          type: Directory

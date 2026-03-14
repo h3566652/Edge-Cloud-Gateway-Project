@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opcua-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opcua-server
+  template:
+    metadata:
+      labels:
+        app: opcua-server
+    spec:
+      containers:
+      - name: opcua-server
+        image: docker.io/library/iot-gateway:v1
+        command: ["python3", "scripts/opcua_server.py"]
+        securityContext:
+          privileged: true
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        volumeMounts:
+        - name: dev
+          mountPath: /dev
+        - name: gpiochip
+          mountPath: /dev/gpiochip0
+      volumes:
+      - name: dev
+        hostPath:
+          path: /dev
+          type: Directory
+      - name: gpiochip
+        hostPath:
+          path: /dev/gpiochip0
+          type: CharDevice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opcua-server-service
+spec:
+  selector:
+    app: opcua-server
+  ports:
+  - port: 4840
+    targetPort: 4840
+  type: ClusterIP
