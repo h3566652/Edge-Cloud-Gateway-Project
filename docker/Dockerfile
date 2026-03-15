@@ -19,7 +19,6 @@ RUN pip install --no-cache-dir \
 
 # Copy scripts
 COPY scripts/ ./scripts/
-COPY certs/ ./certs/
 
 # Default command (overridden per Pod in Kubernetes)
 CMD ["python3", "scripts/opcua_server.py"]
