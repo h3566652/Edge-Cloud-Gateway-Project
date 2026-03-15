@@ -3,3 +3,4 @@ adafruit-circuitpython-dht >= 3.7.0
 RPi.GPIO >= 0.7.1
 python-dotenv >= 1.0.0
 # updated
+# retry
