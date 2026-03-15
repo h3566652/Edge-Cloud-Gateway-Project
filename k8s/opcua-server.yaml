@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: opcua-server
-        image: docker.io/library/iot-gateway:v1
+        image: kpark30525/iot-gateway:latest
         command: ["python3", "scripts/opcua_server.py"]
         securityContext:
           privileged: true
