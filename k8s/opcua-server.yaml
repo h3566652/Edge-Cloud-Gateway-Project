@@ -18,8 +18,15 @@ spec:
 	imagePullPolicy: Always
         command: ["python3", "scripts/opcua_server.py"]
         securityContext:
-          privileged: true
-        env:
+	  privileged: true
+	resources:
+	  requests:
+	    memory: "64Mi"
+	    cpu: "100m"
+	  limits:
+	    memory: "256Mi"
+	    cpu: "300m"
+	env:
         - name: PYTHONUNBUFFERED
           value: "1"
         volumeMounts:

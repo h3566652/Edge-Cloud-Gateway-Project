@@ -19,6 +19,13 @@ spec:
         command: ["python3", "scripts/opcua_client.py"]
         securityContext:
           privileged: true
+	resources:
+	  requests:
+	    memory: "64Mi"
+	    cpu: "100m"
+	  limits:
+	    memory: "256Mi"
+	    cpu: "300m"
         envFrom:
         - configMapRef:
             name: iot-gateway-config
