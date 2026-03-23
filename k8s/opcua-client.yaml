@@ -26,6 +26,15 @@ spec:
 	  limits:
 	    memory: "256Mi"
 	    cpu: "300m"
+	livenessProbe:
+	  exec:
+	    command:
+	    - python3
+	    - -c
+	    - "import os; os.getpid()"
+	  initialDelaySeconds: 30
+	  periodSeconds: 30
+	  failureThreshold: 3
         envFrom:
         - configMapRef:
             name: iot-gateway-config
