@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iot-gateway-config
+data:
+  AWS_IOT_ENDPOINT: "a1x71u4jsfn1px-ats.iot.ap-northeast-2.amazonaws.com"
+  CLIENT_ID: "rpi-dht22-seoul-001"
+  TOPIC: "sensors/dht22/data"
+  CERT_PATH: "/certs/bc9980380dcfc2a34256b732e4b49804a857b1763acdaf96caad2aa2cb0f45d7-certificate.pem.crt"
+  KEY_PATH: "/certs/bc9980380dcfc2a34256b732e4b49804a857b1763acdaf96caad2aa2cb0f45d7-private.pem.key"
+  CA_PATH: "/certs/AmazonRootCA1.pem"
+  OPC_UA_URL: "opc.tcp://opcua-server-service:4840/factory/sensors/"

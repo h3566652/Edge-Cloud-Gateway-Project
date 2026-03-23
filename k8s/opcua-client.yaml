@@ -18,12 +18,15 @@ spec:
         command: ["python3", "scripts/opcua_client.py"]
         securityContext:
           privileged: true
+        envFrom:
+        - configMapRef:
+            name: iot-gateway-config
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
         volumeMounts:
         - name: certs
-          mountPath: /home/kpark30525/iot-project/certs
+          mountPath: /certs
           readOnly: true
       volumes:
       - name: certs
