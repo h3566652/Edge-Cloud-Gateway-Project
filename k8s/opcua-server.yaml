@@ -15,6 +15,7 @@ spec:
       containers:
       - name: opcua-server
         image: kpark30525/iot-gateway:latest
+	imagePullPolicy: Always
         command: ["python3", "scripts/opcua_server.py"]
         securityContext:
           privileged: true
