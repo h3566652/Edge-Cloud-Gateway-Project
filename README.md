@@ -173,6 +173,17 @@ The entire AWS infrastructure is defined in Terraform, meaning the full cloud se
 
 ---
 
+## Live Demo
+
+**Dashboard:** https://main.dzez7hjwosr0.amplifyapp.com
+
+**API Endpoints:**
+- `GET` https://p8ng1t28m3.execute-api.ap-northeast-2.amazonaws.com/sensors/latest
+- `GET` https://p8ng1t28m3.execute-api.ap-northeast-2.amazonaws.com/sensors/history
+- `GET` https://p8ng1t28m3.execute-api.ap-northeast-2.amazonaws.com/anomalies
+
+---
+
 ## Author
 
 KyoungMin Park | Cloud/IoT Project Developer
