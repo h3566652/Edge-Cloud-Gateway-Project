@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opcua-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opcua-server
+  template:
+    metadata:
+      labels:
+        app: opcua-server
+    spec:
+      containers:
+      - name: opcua-server
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["python3", "scripts/opcua_server.py"]
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            memory: {{ .Values.opcuaServer.resources.requests.memory | quote }}
+            cpu: {{ .Values.opcuaServer.resources.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.opcuaServer.resources.limits.memory | quote }}
+            cpu: {{ .Values.opcuaServer.resources.limits.cpu | quote }}
+        livenessProbe:
+          exec:
+            command:
+            - python3
+            - -c
+            - "import socket; s=socket.socket(); s.connect(('localhost', {{ .Values.opcuaServer.port }})); s.close()"
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - python3
+            - -c
+            - "import socket; s=socket.socket(); s.connect(('localhost', {{ .Values.opcuaServer.port }})); s.close()"
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        volumeMounts:
+        - name: dev
+          mountPath: /dev
+        - name: gpiochip
+          mountPath: /dev/gpiochip0
+      volumes:
+      - name: dev
+        hostPath:
+          path: /dev
+          type: Directory
+      - name: gpiochip
+        hostPath:
+          path: /dev/gpiochip0
+          type: CharDevice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opcua-server-service
+spec:
+  selector:
+    app: opcua-server
+  ports:
+  - port: {{ .Values.opcuaServer.port }}
+    targetPort: {{ .Values.opcuaServer.port }}
+  type: ClusterIP

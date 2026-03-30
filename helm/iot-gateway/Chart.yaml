@@ -1,0 +1,6 @@
+apiVersion: v2
+name: iot-gateway
+description: Smart Factory IoT Gateway - OPC UA to AWS IoT Core
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

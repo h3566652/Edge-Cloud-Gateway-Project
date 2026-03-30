@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opcua-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opcua-client
+  template:
+    metadata:
+      labels:
+        app: opcua-client
+    spec:
+      containers:
+      - name: opcua-client
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["python3", "scripts/opcua_client.py"]
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            memory: {{ .Values.opcuaClient.resources.requests.memory | quote }}
+            cpu: {{ .Values.opcuaClient.resources.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.opcuaClient.resources.limits.memory | quote }}
+            cpu: {{ .Values.opcuaClient.resources.limits.cpu | quote }}
+        livenessProbe:
+          exec:
+            command:
+            - python3
+            - -c
+            - "import os; os.getpid()"
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          failureThreshold: 3
+        envFrom:
+        - configMapRef:
+            name: iot-gateway-config
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        volumeMounts:
+        - name: certs
+          mountPath: /certs
+          readOnly: true
+      volumes:
+      - name: certs
+        hostPath:
+          path: {{ .Values.certsPath }}
+          type: Directory

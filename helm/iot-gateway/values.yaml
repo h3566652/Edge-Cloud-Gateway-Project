@@ -1,0 +1,34 @@
+image:
+  repository: kpark30525/iot-gateway
+  tag: latest
+  pullPolicy: Always
+
+opcuaServer:
+  port: 4840
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "300m"
+
+opcuaClient:
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "300m"
+
+config:
+  awsIotEndpoint: "a1x71u4jsfn1px-ats.iot.ap-northeast-2.amazonaws.com"
+  clientId: "rpi-dht22-seoul-001"
+  topic: "sensors/dht22/data"
+  certPath: "/certs/bc9980380dcfc2a34256b732e4b49804a857b1763acdaf96caad2aa2cb0f45d7-certificate.pem.crt"
+  keyPath: "/certs/bc9980380dcfc2a34256b732e4b49804a857b1763acdaf96caad2aa2cb0f45d7-private.pem.key"
+  caPath: "/certs/AmazonRootCA1.pem"
+  opcUaUrl: "opc.tcp://opcua-server-service:4840/factory/sensors/"
+
+certsPath: /home/kpark30525/iot-project/certs
